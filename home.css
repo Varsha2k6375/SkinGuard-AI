@@ -1,0 +1,871 @@
+/* =====================================================
+   SKINGUARD AI - HOME / UPLOAD PAGE ONLY
+===================================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: #f4f7fb;
+    color: #263238;
+    min-height: 100vh;
+}
+
+
+/* =====================================================
+   HEADER
+===================================================== */
+
+header {
+    width: 100%;
+    min-height: 78px;
+
+    background: linear-gradient(
+        135deg,
+        #24146d,
+        #3f2aa8
+    );
+
+    color: white;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 15px 55px;
+
+    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+}
+
+.logo h2 {
+    font-size: 28px;
+    margin-bottom: 3px;
+}
+
+.logo span {
+    font-size: 12px;
+    opacity: 0.85;
+}
+
+nav ul {
+    list-style: none;
+
+    display: flex;
+
+    gap: 30px;
+}
+
+nav ul li a {
+    color: white;
+
+    text-decoration: none;
+
+    font-size: 16px;
+
+    transition: 0.3s;
+}
+
+nav ul li a:hover {
+    color: #dcd7ff;
+}
+
+
+/* =====================================================
+   PAGE HEADER
+===================================================== */
+
+.page-header {
+    width: 90%;
+
+    margin: 40px auto 25px;
+
+    text-align: center;
+}
+
+.page-header h1 {
+    color: #24146d;
+
+    font-size: 34px;
+
+    margin-bottom: 10px;
+}
+
+.page-header p {
+    color: #64748b;
+
+    font-size: 17px;
+}
+
+
+/* =====================================================
+   MAIN CONTAINER
+===================================================== */
+
+.container {
+    width: 90%;
+    max-width: 1250px;
+
+    margin: 30px auto;
+
+    display: flex;
+
+    align-items: stretch;
+
+    justify-content: center;
+
+    gap: 25px;
+}
+
+
+/* =====================================================
+   CAMERA / UPLOAD CARDS
+===================================================== */
+
+.camera-box,
+.upload-box {
+
+    flex: 1;
+
+    background: white;
+
+    padding: 30px;
+
+    border-radius: 18px;
+
+    text-align: center;
+
+    box-shadow:
+        0 8px 25px rgba(36,20,109,0.10);
+
+    border: 1px solid #e8eaf0;
+
+    transition: 0.3s;
+}
+
+.camera-box:hover,
+.upload-box:hover {
+
+    transform: translateY(-4px);
+
+    box-shadow:
+        0 12px 30px rgba(36,20,109,0.16);
+}
+
+
+/* =====================================================
+   CARD ICON
+===================================================== */
+
+.card-icon {
+
+    width: 65px;
+    height: 65px;
+
+    margin: 0 auto 15px;
+
+    border-radius: 50%;
+
+    background: #eeeaff;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: 30px;
+}
+
+
+/* =====================================================
+   CARD TITLE
+===================================================== */
+
+.camera-box h3,
+.upload-box h3 {
+
+    color: #24146d;
+
+    font-size: 23px;
+
+    margin-bottom: 10px;
+}
+
+.card-description {
+
+    color: #718096;
+
+    font-size: 15px;
+
+    line-height: 24px;
+
+    margin-bottom: 20px;
+}
+
+
+/* =====================================================
+   CAMERA
+===================================================== */
+
+#video {
+
+    width: 100%;
+
+    height: 300px;
+
+    object-fit: cover;
+
+    background: #111827;
+
+    border-radius: 14px;
+
+    border: 3px solid #e4e0ff;
+}
+
+
+/* =====================================================
+   CAMERA STATUS
+===================================================== */
+
+.camera-status {
+
+    margin-top: 12px;
+
+    color: #64748b;
+
+    font-size: 14px;
+}
+
+
+/* =====================================================
+   OR SECTION
+===================================================== */
+
+.or-box {
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 10px;
+
+    color: #24146d;
+
+    font-weight: bold;
+}
+
+.or-box span {
+
+    width: 45px;
+    height: 45px;
+
+    border-radius: 50%;
+
+    background: #eeeaff;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: 15px;
+}
+
+.or-line {
+
+    width: 1px;
+
+    height: 60px;
+
+    background: #d6d2f5;
+}
+
+
+/* =====================================================
+   FILE INPUT
+===================================================== */
+
+#image {
+
+    width: 100%;
+
+    padding: 13px;
+
+    border: 2px dashed #c9c3f5;
+
+    border-radius: 10px;
+
+    background: #fafaff;
+
+    cursor: pointer;
+
+    font-size: 14px;
+}
+
+
+/* =====================================================
+   FILE NAME
+===================================================== */
+
+.file-name {
+
+    margin-top: 10px;
+
+    color: #64748b;
+
+    font-size: 13px;
+
+    word-break: break-word;
+}
+
+
+/* =====================================================
+   BUTTONS
+===================================================== */
+
+button {
+
+    width: 100%;
+
+    height: 50px;
+
+    border: none;
+
+    border-radius: 10px;
+
+    background: #24146d;
+
+    color: white;
+
+    font-size: 16px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    margin-top: 20px;
+
+    transition: 0.3s;
+}
+
+button:hover {
+
+    background: #3922a8;
+
+    transform: translateY(-2px);
+}
+
+
+/* =====================================================
+   UPLOAD BUTTON
+===================================================== */
+
+#uploadBtn {
+
+    background: #24146d;
+}
+
+#uploadBtn:hover {
+
+    background: #3922a8;
+}
+
+
+/* =====================================================
+   PREVIEW SECTION
+===================================================== */
+
+.preview-section {
+
+    width: 90%;
+
+    max-width: 1250px;
+
+    margin: 35px auto;
+
+    background: white;
+
+    padding: 30px;
+
+    border-radius: 18px;
+
+    box-shadow:
+        0 8px 25px rgba(36,20,109,0.10);
+}
+
+.preview-header {
+
+    text-align: center;
+
+    margin-bottom: 25px;
+}
+
+.preview-header h2 {
+
+    color: #24146d;
+
+    margin-bottom: 8px;
+}
+
+.preview-header p {
+
+    color: #718096;
+
+    font-size: 14px;
+}
+
+
+/* =====================================================
+   PREVIEW CONTAINER
+===================================================== */
+
+.preview-container {
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    gap: 50px;
+}
+
+
+/* =====================================================
+   PREVIEW IMAGE
+===================================================== */
+
+.preview-image-box {
+
+    width: 350px;
+
+    height: 350px;
+
+    border-radius: 15px;
+
+    background: #f7f8fc;
+
+    border: 2px dashed #c9c3f5;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    overflow: hidden;
+}
+
+#previewImage {
+
+    width: 100%;
+
+    height: 100%;
+
+    object-fit: cover;
+
+    border-radius: 13px;
+
+    display: none;
+}
+
+
+/* =====================================================
+   NO PREVIEW
+===================================================== */
+
+.no-preview {
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 10px;
+
+    color: #94a3b8;
+
+    font-size: 45px;
+}
+
+.no-preview span {
+
+    font-size: 14px;
+
+    text-align: center;
+}
+
+
+/* =====================================================
+   IMAGE INFORMATION
+===================================================== */
+
+.image-info {
+
+    width: 400px;
+
+    padding: 25px;
+
+    background: #fafaff;
+
+    border-radius: 14px;
+
+    border: 1px solid #e5e7eb;
+}
+
+.image-info h3 {
+
+    color: #24146d;
+
+    margin-bottom: 20px;
+}
+
+.info-row {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    padding: 14px 0;
+
+    border-bottom: 1px solid #e5e7eb;
+
+    gap: 15px;
+}
+
+.info-row span {
+
+    color: #64748b;
+
+    font-size: 14px;
+}
+
+.info-row strong {
+
+    color: #263238;
+
+    font-size: 14px;
+
+    text-align: right;
+
+    word-break: break-word;
+}
+
+
+/* =====================================================
+   STATUS
+===================================================== */
+
+.status-waiting {
+
+    color: #f59e0b !important;
+}
+
+.status-success {
+
+    color: #16a34a !important;
+}
+
+
+/* =====================================================
+   ANALYSIS PIPELINE
+===================================================== */
+
+.info-section {
+
+    width: 90%;
+
+    max-width: 1250px;
+
+    margin: 35px auto;
+
+    background: white;
+
+    padding: 30px;
+
+    border-radius: 18px;
+
+    text-align: center;
+
+    box-shadow:
+        0 8px 25px rgba(36,20,109,0.10);
+}
+
+.info-section h2 {
+
+    color: #24146d;
+
+    margin-bottom: 10px;
+}
+
+.info-section > p {
+
+    color: #718096;
+
+    margin-bottom: 30px;
+}
+
+
+/* =====================================================
+   PIPELINE
+===================================================== */
+
+.pipeline {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 10px;
+}
+
+.pipeline-step {
+
+    width: 170px;
+
+    min-height: 150px;
+
+    background: #fafaff;
+
+    border: 1px solid #e3e0f8;
+
+    border-radius: 14px;
+
+    padding: 18px 12px;
+}
+
+.step-number {
+
+    width: 35px;
+
+    height: 35px;
+
+    margin: 0 auto 10px;
+
+    border-radius: 50%;
+
+    background: #24146d;
+
+    color: white;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-weight: bold;
+}
+
+.pipeline-step h3 {
+
+    color: #24146d;
+
+    font-size: 15px;
+
+    margin-bottom: 8px;
+}
+
+.pipeline-step p {
+
+    color: #718096;
+
+    font-size: 12px;
+
+    line-height: 18px;
+}
+
+.pipeline-arrow {
+
+    color: #24146d;
+
+    font-size: 25px;
+
+    font-weight: bold;
+}
+
+
+/* =====================================================
+   NEXT BUTTON
+===================================================== */
+
+.next-page {
+
+    width: 90%;
+
+    max-width: 600px;
+
+    margin: 40px auto;
+
+    text-align: center;
+}
+
+#nextBtn {
+
+    background: #16a34a;
+
+    font-size: 17px;
+}
+
+#nextBtn:hover {
+
+    background: #15803d;
+}
+
+.next-description {
+
+    margin-top: 10px;
+
+    color: #94a3b8;
+
+    font-size: 13px;
+}
+
+
+/* =====================================================
+   FOOTER
+===================================================== */
+
+footer {
+
+    margin-top: 60px;
+
+    background: #24146d;
+
+    color: white;
+
+    padding: 30px;
+
+    text-align: center;
+}
+
+.footer-content h3 {
+
+    font-size: 22px;
+
+    margin-bottom: 8px;
+}
+
+.footer-content p {
+
+    font-size: 13px;
+
+    opacity: 0.85;
+
+    margin: 7px;
+}
+
+.footer-divider {
+
+    width: 60%;
+
+    height: 1px;
+
+    background: rgba(255,255,255,0.25);
+
+    margin: 20px auto;
+}
+
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+
+@media (max-width: 1000px) {
+
+    .container {
+
+        flex-direction: column;
+
+        align-items: center;
+    }
+
+    .camera-box,
+    .upload-box {
+
+        width: 100%;
+    }
+
+    .or-box {
+
+        flex-direction: row;
+    }
+
+    .or-line {
+
+        width: 60px;
+
+        height: 1px;
+    }
+
+    .preview-container {
+
+        flex-direction: column;
+    }
+
+    .image-info {
+
+        width: 100%;
+
+        max-width: 500px;
+    }
+
+    .pipeline {
+
+        flex-wrap: wrap;
+    }
+
+    .pipeline-arrow {
+
+        display: none;
+    }
+}
+
+
+@media (max-width: 600px) {
+
+    header {
+
+        padding: 15px 20px;
+
+        flex-direction: column;
+
+        gap: 15px;
+    }
+
+    nav ul {
+
+        gap: 15px;
+    }
+
+    .page-header h1 {
+
+        font-size: 27px;
+    }
+
+    .preview-image-box {
+
+        width: 280px;
+
+        height: 280px;
+    }
+
+    .pipeline-step {
+
+        width: 100%;
+    }
+}

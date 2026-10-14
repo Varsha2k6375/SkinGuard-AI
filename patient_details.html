@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Patient Details - SkinGuard AI</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+    <style>
+
+        .patient-container {
+
+            width: 90%;
+            max-width: 600px;
+
+            margin: 50px auto;
+
+            background: white;
+
+            padding: 35px;
+
+            border-radius: 15px;
+
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+
+        }
+
+        .patient-container h1 {
+
+            text-align: center;
+
+            color: #24146d;
+
+            margin-bottom: 10px;
+
+        }
+
+        .patient-container p {
+
+            text-align: center;
+
+            color: #666;
+
+            margin-bottom: 30px;
+
+        }
+
+        .form-group {
+
+            margin-bottom: 20px;
+
+        }
+
+        .form-group label {
+
+            display: block;
+
+            margin-bottom: 8px;
+
+            font-weight: bold;
+
+            color: #333;
+
+        }
+
+        .form-group input {
+
+            width: 100%;
+
+            padding: 13px;
+
+            border: 1px solid #ccc;
+
+            border-radius: 8px;
+
+            font-size: 16px;
+
+        }
+
+        .continue-btn {
+
+            width: 100%;
+
+            padding: 14px;
+
+            background: #24146d;
+
+            color: white;
+
+            border: none;
+
+            border-radius: 8px;
+
+            font-size: 17px;
+
+            cursor: pointer;
+
+        }
+
+        .continue-btn:hover {
+
+            background: #3922a8;
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+    <div class="logo">
+
+        <h2>SkinGuard AI</h2>
+
+    </div>
+
+</header>
+
+
+<div class="patient-container">
+
+    <h1>Patient Details</h1>
+
+    <p>
+        Enter patient details before starting skin analysis
+    </p>
+
+
+    <form method="POST">
+
+
+        <div class="form-group">
+
+            <label for="patient_name">
+                Patient Name
+            </label>
+
+            <input
+                type="text"
+                id="patient_name"
+                name="patient_name"
+                placeholder="Enter patient name"
+                required
+            >
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label for="age">
+                Age
+            </label>
+
+            <input
+                type="number"
+                id="age"
+                name="age"
+                placeholder="Enter age"
+                min="1"
+                max="120"
+                required
+            >
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label for="gender">
+                Gender
+            </label>
+
+            <input
+                type="text"
+                id="gender"
+                name="gender"
+                placeholder="Male / Female / Other"
+                required
+            >
+
+        </div>
+
+
+        <button
+            type="submit"
+            class="continue-btn">
+
+            Continue to Skin Analysis →
+
+        </button>
+
+
+    </form>
+
+</div>
+
+
+</body>
+
+</html>

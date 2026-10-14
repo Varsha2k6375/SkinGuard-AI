@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>SkinGuard AI - Explainable AI</title>
+
+
+    <!-- =====================================================
+         MAIN CSS
+    ====================================================== -->
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/style.css') }}"
+    >
+
+
+    <!-- =====================================================
+         PAGE CSS
+    ====================================================== -->
+
+    <style>
+
+        /* ====================================================
+           PAGE CONTAINER
+        ==================================================== */
+
+        .gradcam-container {
+
+            width: 94%;
+
+            max-width: 1250px;
+
+            margin: 35px auto 50px;
+
+        }
+
+
+        /* ====================================================
+           PAGE HEADER
+        ==================================================== */
+
+        .page-header {
+
+            text-align: center;
+
+            margin-bottom: 30px;
+
+        }
+
+
+        .page-header h1 {
+
+            margin: 0;
+
+            color: #0b2c55;
+
+            font-size: 34px;
+
+            font-weight: 700;
+
+        }
+
+
+        .page-header p {
+
+            margin-top: 8px;
+
+            color: #666;
+
+            font-size: 16px;
+
+        }
+
+
+        /* ====================================================
+           RESULT INFORMATION
+        ==================================================== */
+
+        .result-info {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 22px;
+
+            margin-bottom: 28px;
+
+        }
+
+
+        /* ====================================================
+           RESULT CARD
+        ==================================================== */
+
+        .info-card {
+
+            background: #ffffff;
+
+            padding: 20px;
+
+            min-height: 105px;
+
+            border-radius: 14px;
+
+            box-shadow:
+                0 4px 16px
+                rgba(0, 0, 0, 0.10);
+
+            text-align: center;
+
+            display: flex;
+
+            flex-direction: column;
+
+            justify-content: center;
+
+            align-items: center;
+
+        }
+
+
+        .info-card h3 {
+
+            margin: 0 0 10px;
+
+            color: #555;
+
+            font-size: 15px;
+
+            font-weight: 600;
+
+        }
+
+
+        .info-card p {
+
+            margin: 0;
+
+            color: #0b5ed7;
+
+            font-size: 21px;
+
+            font-weight: 700;
+
+        }
+
+
+        /* ====================================================
+           ERROR BOX
+        ==================================================== */
+
+        .error-box {
+
+            width: 100%;
+
+            box-sizing: border-box;
+
+            margin: 20px 0 28px;
+
+            padding: 17px 20px;
+
+            background: #ffe8e8;
+
+            border: 1px solid #ff8a8a;
+
+            color: #a40000;
+
+            border-radius: 12px;
+
+            text-align: center;
+
+            font-size: 15px;
+
+        }
+
+
+        .error-box strong {
+
+            font-size: 16px;
+
+        }
+
+
+        /* ====================================================
+           IMAGE GRID
+        ==================================================== */
+
+        .image-grid {
+
+            width: 100%;
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, minmax(0, 1fr));
+
+            gap: 24px;
+
+            align-items: stretch;
+
+        }
+
+
+        /* ====================================================
+           IMAGE CARD
+        ==================================================== */
+
+        .image-card {
+
+            background: #ffffff;
+
+            padding: 18px;
+
+            border-radius: 15px;
+
+            box-shadow:
+                0 4px 18px
+                rgba(0, 0, 0, 0.10);
+
+            text-align: center;
+
+            min-width: 0;
+
+            display: flex;
+
+            flex-direction: column;
+
+            align-items: center;
+
+        }
+
+
+        /* ====================================================
+           IMAGE CARD TITLE
+        ==================================================== */
+
+        .image-card h2 {
+
+            width: 100%;
+
+            margin: 0 0 16px;
+
+            color: #17365d;
+
+            font-size: 20px;
+
+            font-weight: 700;
+
+            text-align: center;
+
+        }
+
+
+        /* ====================================================
+           IMAGE WRAPPER
+        ==================================================== */
+
+        .image-wrapper {
+
+            width: 100%;
+
+            height: 330px;
+
+            background: #f7f9fc;
+
+            border: 1px solid #dce2ea;
+
+            border-radius: 11px;
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            overflow: hidden;
+
+        }
+
+
+        /* ====================================================
+           ACTUAL IMAGE
+        ==================================================== */
+
+        .image-wrapper img {
+
+            display: block;
+
+            width: 100%;
+
+            height: 100%;
+
+            object-fit: contain;
+
+            border-radius: 9px;
+
+        }
+
+
+        /* ====================================================
+           NO IMAGE
+        ==================================================== */
+
+        .no-image {
+
+            width: 100%;
+
+            height: 330px;
+
+            background: #f7f9fc;
+
+            border: 1px dashed #c7d0dc;
+
+            border-radius: 11px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            text-align: center;
+
+            color: #697586;
+
+            font-size: 15px;
+
+            box-sizing: border-box;
+
+            padding: 20px;
+
+        }
+
+
+        /* ====================================================
+           IMAGE LABEL
+        ==================================================== */
+
+        .image-label {
+
+            margin-top: 12px;
+
+            font-size: 14px;
+
+            color: #667085;
+
+        }
+
+
+        /* ====================================================
+           LEGEND
+        ==================================================== */
+
+        .legend-card {
+
+            grid-column: 1 / -1;
+
+            width: 100%;
+
+            box-sizing: border-box;
+
+            margin-top: 2px;
+
+            padding: 18px 25px;
+
+            background: #ffffff;
+
+            border-radius: 14px;
+
+            box-shadow:
+                0 4px 18px
+                rgba(0, 0, 0, 0.09);
+
+            text-align: center;
+
+        }
+
+
+        .legend-card h3 {
+
+            margin: 0 0 12px;
+
+            color: #17365d;
+
+            font-size: 17px;
+
+        }
+
+
+        .legend-card img {
+
+            width: 100%;
+
+            max-width: 500px;
+
+            height: auto;
+
+            max-height: 90px;
+
+            object-fit: contain;
+
+            border: none;
+
+            background: transparent;
+
+        }
+
+
+        /* ====================================================
+           INFORMATION BOX
+        ==================================================== */
+
+        .success-box {
+
+            width: 100%;
+
+            box-sizing: border-box;
+
+            margin-top: 25px;
+
+            padding: 18px 22px;
+
+            background: #eef6ff;
+
+            border: 1px solid #c8def7;
+
+            color: #274c77;
+
+            border-radius: 12px;
+
+            text-align: center;
+
+            font-size: 15px;
+
+            line-height: 1.6;
+
+        }
+
+
+        .success-box strong {
+
+            color: #17365d;
+
+        }
+
+
+        /* ====================================================
+           FORWARD BUTTON
+        ==================================================== */
+
+        .forward-button {
+
+            display: block;
+
+            width: 300px;
+
+            margin: 30px auto 0;
+
+            padding: 14px 22px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #0b5ed7,
+                    #173b9c
+                );
+
+            color: #ffffff;
+
+            text-decoration: none;
+
+            border-radius: 9px;
+
+            text-align: center;
+
+            font-size: 16px;
+
+            font-weight: 600;
+
+            box-shadow:
+                0 4px 12px
+                rgba(11, 94, 215, 0.25);
+
+            transition: 0.2s ease;
+
+        }
+
+
+        .forward-button:hover {
+
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 6px 16px
+                rgba(11, 94, 215, 0.30);
+
+        }
+
+
+        /* ====================================================
+           MOBILE / TABLET
+        ==================================================== */
+
+        @media (max-width: 1000px) {
+
+            .image-grid {
+
+                grid-template-columns:
+                    repeat(2, minmax(0, 1fr));
+
+            }
+
+            .result-info {
+
+                grid-template-columns:
+                    repeat(2, 1fr);
+
+            }
+
+        }
+
+
+        @media (max-width: 650px) {
+
+            .gradcam-container {
+
+                width: 94%;
+
+                margin-top: 25px;
+
+            }
+
+
+            .page-header h1 {
+
+                font-size: 27px;
+
+            }
+
+
+            .result-info {
+
+                grid-template-columns: 1fr;
+
+            }
+
+
+            .image-grid {
+
+                grid-template-columns: 1fr;
+
+            }
+
+
+            .image-wrapper {
+
+                height: 320px;
+
+            }
+
+
+            .no-image {
+
+                height: 320px;
+
+            }
+
+
+            .forward-button {
+
+                width: 90%;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="gradcam-container">
+
+
+    <!-- =====================================================
+         PAGE HEADER
+    ====================================================== -->
+
+    <div class="page-header">
+
+        <h1>
+            Explainable AI – Grad-CAM
+        </h1>
+
+        <p>
+            Visual explanation of the regions that influenced
+            the model's prediction
+        </p>
+
+    </div>
+
+
+    <!-- =====================================================
+         RESULT INFORMATION
+    ====================================================== -->
+
+    <div class="result-info">
+
+
+        <!-- PREDICTED DISEASE -->
+
+        <div class="info-card">
+
+            <h3>
+                Predicted Disease
+            </h3>
+
+            <p>
+
+                {% if disease is defined and disease %}
+
+                    {{ disease }}
+
+                {% else %}
+
+                    Unknown
+
+                {% endif %}
+
+            </p>
+
+        </div>
+
+
+        <!-- CONFIDENCE -->
+
+        <div class="info-card">
+
+            <h3>
+                Confidence
+            </h3>
+
+            <p>
+
+                {% if confidence is defined
+                      and confidence is not none %}
+
+                    {{ "%.2f"|format(confidence|float) }}%
+
+                {% else %}
+
+                    0.00%
+
+                {% endif %}
+
+            </p>
+
+        </div>
+
+
+        <!-- CLASS INDEX -->
+
+        <div class="info-card">
+
+            <h3>
+                Class Index
+            </h3>
+
+            <p>
+
+                {% if class_index is defined
+                      and class_index is not none %}
+
+                    {{ class_index }}
+
+                {% else %}
+
+                    -
+
+                {% endif %}
+
+            </p>
+
+        </div>
+
+
+    </div>
+
+
+    <!-- =====================================================
+         ERROR MESSAGE
+    ====================================================== -->
+
+    {% if error %}
+
+        <div class="error-box">
+
+            <strong>
+                Grad-CAM Error
+            </strong>
+
+            <br><br>
+
+            {{ error }}
+
+        </div>
+
+    {% endif %}
+
+
+    <!-- =====================================================
+         IMAGE SECTION
+    ====================================================== -->
+
+    <div class="image-grid">
+
+
+        <!-- =================================================
+             ORIGINAL IMAGE
+        ================================================== -->
+
+        <div class="image-card">
+
+            <h2>
+                Original Image
+            </h2>
+
+
+            {% if original_image %}
+
+                <div class="image-wrapper">
+
+                    <img
+                        src="{{ original_image }}"
+                        alt="Original Skin Image"
+                    >
+
+                </div>
+
+
+                <div class="image-label">
+
+                    Uploaded dermoscopic image
+
+                </div>
+
+            {% else %}
+
+                <div class="no-image">
+
+                    Original image not available.
+
+                </div>
+
+            {% endif %}
+
+        </div>
+
+
+        <!-- =================================================
+             GRAD-CAM HEATMAP
+        ================================================== -->
+
+        <div class="image-card">
+
+            <h2>
+                Grad-CAM Heatmap
+            </h2>
+
+
+            {% if gradcam_image %}
+
+                <div class="image-wrapper">
+
+                    <img
+                        src="{{ gradcam_image }}"
+                        alt="Grad-CAM Heatmap"
+                    >
+
+                </div>
+
+
+                <div class="image-label">
+
+                    Red / yellow regions indicate
+                    higher model attention
+
+                </div>
+
+            {% else %}
+
+                <div class="no-image">
+
+                    Grad-CAM heatmap not available.
+
+                </div>
+
+            {% endif %}
+
+        </div>
+
+
+        <!-- =================================================
+             IMPORTANT REGION
+        ================================================== -->
+
+        <div class="image-card">
+
+            <h2>
+                Important Region
+            </h2>
+
+
+            {% if important_region %}
+
+                <div class="image-wrapper">
+
+                    <img
+                        src="{{ important_region }}"
+                        alt="Important Region"
+                    >
+
+                </div>
+
+
+                <div class="image-label">
+
+                    Segmented lesion region
+                    with important areas highlighted
+
+                </div>
+
+            {% else %}
+
+                <div class="no-image">
+
+                    Important region not available.
+
+                </div>
+
+            {% endif %}
+
+        </div>
+
+
+        <!-- =================================================
+             HEATMAP LEGEND
+        ================================================== -->
+
+        {% if legend %}
+
+            <div class="legend-card">
+
+                <h3>
+                    Grad-CAM Heatmap Scale
+                </h3>
+
+                <img
+                    src="{{ legend }}"
+                    alt="Grad-CAM Color Legend"
+                >
+
+            </div>
+
+        {% endif %}
+
+
+    </div>
+
+
+    <!-- =====================================================
+         DESCRIPTION
+    ====================================================== -->
+
+    {% if gradcam_image %}
+
+        <div class="success-box">
+
+            <strong>
+                Grad-CAM Explanation:
+            </strong>
+
+            The heatmap highlights the image regions
+            that contributed to the model's prediction.
+
+            <br>
+
+            <strong>
+                Red / Yellow
+            </strong>
+            → Higher importance
+
+            &nbsp;&nbsp;&nbsp;
+
+            <strong>
+                Green
+            </strong>
+            → Moderate importance
+
+            &nbsp;&nbsp;&nbsp;
+
+            <strong>
+                Blue
+            </strong>
+            → Lower importance
+
+        </div>
+
+    {% endif %}
+
+
+    <!-- =====================================================
+         CONTINUE TO SEVERITY
+    ====================================================== -->
+
+    <a
+        href="{{ url_for('severity.severity_page') }}"
+        class="forward-button"
+    >
+
+        Continue to Severity Prediction
+        &nbsp; →
+
+    </a>
+
+
+</div>
+
+
+</body>
+
+</html>

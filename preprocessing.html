@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Image Preprocessing</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static',
+          filename='css/style.css') }}">
+
+    <script defer
+            src="{{ url_for('static',
+            filename='js/preprocessing.js') }}">
+    </script>
+
+</head>
+
+<body>
+
+<header>
+
+    <h2>SkinGuard AI</h2>
+
+</header>
+
+<h1 align="center">
+
+Image Preprocessing
+
+</h1>
+
+<div class="preprocess-container">
+
+    <div class="card">
+
+        <h3>Original Image</h3>
+
+        <img src="{{ original_image }}">
+
+    </div>
+
+    <div class="card">
+
+        <h3>Preprocessed Image</h3>
+
+        <img src="{{ processed_image }}">
+
+    </div>
+
+</div>
+
+<div class="process-list">
+
+    <h3>Completed Operations</h3>
+
+    <ul>
+
+        <li>✔ Image Resized (224 × 224)</li>
+
+        <li>✔ RGB Conversion</li>
+
+        <li>✔ Noise Removed</li>
+
+        <li>✔ Contrast Enhanced</li>
+
+        <li>✔ Pixel Normalization</li>
+
+    </ul>
+
+</div>
+
+<div class="next-btn">
+
+    <a href="/segmentation">
+
+        <button>
+
+            Continue to Segmentation →
+
+        </button>
+
+    </a>
+
+</div>
+
+</body>
+
+</html>

@@ -1,0 +1,1285 @@
+/* ==========================
+        GLOBAL SETTINGS
+========================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI',sans-serif;
+}
+
+body{
+
+    background:#f4f6fb;
+
+    color:#333;
+
+}
+
+
+/* ==========================
+        HEADER
+========================== */
+
+header{
+
+    width:100%;
+
+    height:75px;
+
+    background:#24146d;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:0 40px;
+
+    color:white;
+
+}
+
+.logo h2{
+
+    font-size:30px;
+
+    font-weight:bold;
+
+}
+
+nav ul{
+
+    display:flex;
+
+    list-style:none;
+
+    gap:30px;
+
+}
+
+nav ul li a{
+
+    color:white;
+
+    text-decoration:none;
+
+    font-size:17px;
+
+    transition:.3s;
+
+}
+
+nav ul li a:hover{
+
+    color:#d7d2ff;
+
+}
+
+
+/* ==========================
+        MAIN CONTAINER
+========================== */
+
+.container{
+
+    width:95%;
+
+    margin:35px auto;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    gap:25px;
+
+}
+
+
+/* ==========================
+        CARD
+========================== */
+
+.camera-box,
+.upload-box{
+
+    width:42%;
+
+    background:white;
+
+    border-radius:15px;
+
+    padding:25px;
+
+    box-shadow:0 6px 20px rgba(0,0,0,.15);
+
+}
+
+.camera-box h3,
+.upload-box h3{
+
+    margin-bottom:20px;
+
+    color:#24146d;
+
+}
+
+
+/* ==========================
+        CAMERA
+========================== */
+
+#video{
+
+    width:100%;
+
+    height:350px;
+
+    border-radius:12px;
+
+    border:4px solid #24146d;
+
+    object-fit:cover;
+
+}
+
+
+/* ==========================
+        BUTTONS
+========================== */
+
+button{
+
+    margin-top:20px;
+
+    width:100%;
+
+    height:48px;
+
+    border:none;
+
+    border-radius:8px;
+
+    background:#24146d;
+
+    color:white;
+
+    font-size:16px;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+button:hover{
+
+    background:#3922a8;
+
+}
+
+
+/* ==========================
+        FILE INPUT
+========================== */
+
+input[type=file]{
+
+    width:100%;
+
+    padding:10px;
+
+    border:1px solid #ccc;
+
+    border-radius:8px;
+
+}
+
+
+/* ==========================
+        SELECT BOX
+========================== */
+
+select{
+
+    width:100%;
+
+    padding:12px;
+
+    border-radius:8px;
+
+    border:1px solid #ccc;
+
+    font-size:15px;
+
+}
+
+
+/* ==========================
+            OR
+========================== */
+
+.or-box{
+
+    font-size:30px;
+
+    color:#24146d;
+
+    font-weight:bold;
+
+}
+
+
+/* ==========================
+        PREVIEW
+========================== */
+
+.preview-section{
+
+    width:90%;
+
+    margin:auto;
+
+    background:white;
+
+    border-radius:15px;
+
+    padding:20px;
+
+    text-align:center;
+
+    box-shadow:0 6px 15px rgba(0,0,0,.15);
+
+}
+
+.preview-section h3{
+
+    color:#24146d;
+
+    margin-bottom:15px;
+
+}
+
+#previewImage{
+
+    width:320px;
+
+    height:320px;
+
+    object-fit:cover;
+
+    border-radius:12px;
+
+    border:4px solid #24146d;
+
+}
+
+
+/* ==========================
+        NEXT BUTTON
+========================== */
+
+.next-page{
+
+    width:90%;
+
+    margin:30px auto;
+
+}
+
+.next-page button{
+
+    background:#18a94b;
+
+    font-size:18px;
+
+}
+
+.next-page button:hover{
+
+    background:#0f8a3b;
+
+}
+
+
+/* ==========================
+        FOOTER
+========================== */
+
+footer{
+
+    margin-top:40px;
+
+    background:#24146d;
+
+    color:white;
+
+    text-align:center;
+
+    padding:20px;
+
+}
+
+footer p{
+
+    margin:6px;
+
+}
+
+
+/* ==========================
+        RESPONSIVE
+========================== */
+
+@media(max-width:900px){
+
+.container{
+
+    flex-direction:column;
+
+}
+
+.camera-box,
+.upload-box{
+
+    width:100%;
+
+}
+
+.or-box{
+
+    display:none;
+
+}
+
+#video{
+
+    height:280px;
+
+}
+
+#previewImage{
+
+    width:250px;
+
+    height:250px;
+
+}
+
+}
+/* ===========================
+        QUALITY PAGE
+=========================== */
+
+.quality-container{
+
+    width:95%;
+
+    margin:30px auto;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    gap:30px;
+
+}
+
+.image-card,
+.quality-card{
+
+    width:48%;
+
+    background:white;
+
+    padding:25px;
+
+    border-radius:15px;
+
+    box-shadow:0 5px 15px rgba(0,0,0,.2);
+
+}
+
+.image-card img{
+
+    width:100%;
+
+    border-radius:12px;
+
+}
+
+.quality-card table{
+
+    width:100%;
+
+    border-collapse:collapse;
+
+}
+
+.quality-card td{
+
+    padding:15px;
+
+    border-bottom:1px solid #ddd;
+
+}
+
+.score-box{
+
+    width:300px;
+
+    margin:30px auto;
+
+    text-align:center;
+
+    background:#24146d;
+
+    color:white;
+
+    padding:25px;
+
+    border-radius:50%;
+
+}
+
+.score-box h1{
+
+    font-size:55px;
+
+}
+
+.status-box{
+
+    width:70%;
+
+    margin:auto;
+
+    text-align:center;
+
+    background:#ffffff;
+
+    padding:20px;
+
+    border-radius:12px;
+
+    box-shadow:0 5px 15px rgba(0,0,0,.15);
+
+}
+
+.next-btn{
+
+    width:300px;
+
+    margin:35px auto;
+
+}
+/* ===========================
+PREPROCESSING PAGE
+=========================== */
+
+.preprocess-container{
+
+display:flex;
+
+justify-content:space-around;
+
+gap:30px;
+
+margin-top:40px;
+
+}
+
+.card{
+
+width:45%;
+
+background:#fff;
+
+padding:20px;
+
+border-radius:15px;
+
+box-shadow:0px 5px 15px rgba(0,0,0,.2);
+
+text-align:center;
+
+}
+
+.card img{
+
+width:100%;
+
+border-radius:10px;
+
+}
+
+.process-list{
+
+width:80%;
+
+margin:40px auto;
+
+background:white;
+
+padding:25px;
+
+border-radius:15px;
+
+box-shadow:0 5px 15px rgba(0,0,0,.15);
+
+}
+
+.process-list li{
+
+padding:10px;
+
+font-size:18px;
+
+}
+
+.status-box{
+
+width:80%;
+
+margin:auto;
+
+padding:20px;
+
+background:#e8f5e9;
+
+border-left:6px solid green;
+
+border-radius:10px;
+
+}
+
+.next-btn{
+
+margin:40px;
+
+text-align:center;
+
+}
+
+.next-btn button{
+
+padding:15px 40px;
+
+font-size:18px;
+
+border:none;
+
+border-radius:10px;
+
+background:#1b4de4;
+
+color:white;
+
+cursor:pointer;
+
+}
+
+.next-btn button:hover{
+
+background:#0d2fa3;
+
+}
+/* ===========================
+        SEGMENTATION PAGE
+=========================== */
+
+.segmentation-container{
+
+    display:flex;
+    align-items:center;
+    gap:40px;
+
+}
+
+/* Image Card */
+
+.segmentation-container .card{
+
+    width:220px;
+    min-width:220px;
+
+    background:#fff;
+
+    padding:20px;
+
+    border-radius:18px;
+
+    box-shadow:0 5px 18px rgba(0,0,0,.15);
+
+    text-align:center;
+
+}
+
+/* Bigger Image */
+
+.segmentation-container .card img{
+
+    width:170px;
+    height:170px;
+
+    object-fit:cover;
+
+    border-radius:12px;
+
+    margin-top:10px;
+
+}
+
+/* Card Title */
+
+.segmentation-container .card h3{
+
+    font-size:28px;
+
+    margin-bottom:10px;
+
+}
+
+/* Algorithm Box */
+
+.algorithm-box{
+
+    width:300px;
+
+    background:#fff;
+
+    padding:30px;
+
+    border-radius:18px;
+
+    text-align:center;
+
+    box-shadow:0 5px 18px rgba(0,0,0,.15);
+
+}
+
+.algorithm-box h3{
+
+    font-size:22px;
+
+    color:#24146d;
+
+    margin-bottom:15px;
+
+}
+
+.algorithm-box p{
+
+    font-size:36px;
+
+    font-weight:bold;
+
+}
+
+/* Status Box */
+
+.status-box{
+
+    width:650px;
+
+    background:#eaf7ea;
+
+    border-left:6px solid green;
+
+    padding:30px;
+
+    border-radius:15px;
+
+}
+
+.status-box h2{
+
+    font-size:24px;
+
+    margin-bottom:10px;
+
+}
+
+.status-box p{
+
+    font-size:18px;
+
+    line-height:30px;
+
+}
+/* ==============================
+   Classification
+============================== */
+
+.classification-card{
+
+    width:85%;
+
+    margin:auto;
+
+    background:white;
+
+    padding:25px;
+
+    border-radius:12px;
+
+    box-shadow:0 0 15px rgba(0,0,0,.15);
+
+}
+
+.result-image{
+
+    width:260px;
+
+    display:block;
+
+    margin:auto;
+
+    border-radius:10px;
+
+    margin-bottom:20px;
+
+}
+
+.result-table{
+
+    width:100%;
+
+    border-collapse:collapse;
+
+}
+
+.result-table th{
+
+    background:#2c7be5;
+
+    color:white;
+
+    padding:12px;
+
+    text-align:left;
+
+}
+
+.result-table td{
+
+    padding:12px;
+
+    border:1px solid #ddd;
+
+}
+
+.button-group{
+
+    text-align:center;
+
+    margin-top:30px;
+
+}
+
+.button-group button{
+
+    background:#2c7be5;
+
+    color:white;
+
+    padding:12px 35px;
+
+    border:none;
+
+    border-radius:8px;
+
+    cursor:pointer;
+
+    font-size:18px;
+
+}
+/* ==========================================
+   Classification Page
+========================================== */
+
+.classification-container{
+
+    width:90%;
+    max-width:1200px;
+
+    margin:40px auto;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:flex-start;
+
+    gap:40px;
+
+    flex-wrap:wrap;
+
+}
+
+.upload-card{
+
+    flex:1;
+
+    min-width:350px;
+
+    background:#ffffff;
+
+    padding:30px;
+
+    border-radius:15px;
+
+    text-align:center;
+
+    box-shadow:0 5px 20px rgba(0,0,0,0.15);
+
+}
+
+.preview-image{
+
+    width:100%;
+
+    max-width:350px;
+
+    height:350px;
+
+    object-fit:cover;
+
+    border-radius:10px;
+
+    border:2px solid #dcdcdc;
+
+}
+
+#imageInput{
+
+    width:100%;
+
+    margin-top:20px;
+
+    padding:12px;
+
+    border-radius:8px;
+
+    border:1px solid #ccc;
+
+    cursor:pointer;
+
+}
+
+#predictBtn{
+
+    width:100%;
+
+    margin-top:20px;
+
+    padding:14px;
+
+    background:#1b5e20;
+
+    color:white;
+
+    font-size:18px;
+
+    border:none;
+
+    border-radius:8px;
+
+    cursor:pointer;
+
+    transition:0.3s;
+
+}
+
+#predictBtn:hover{
+
+    background:#2e7d32;
+
+}
+
+#predictBtn:disabled{
+
+    background:#9e9e9e;
+
+    cursor:not-allowed;
+
+}
+
+.result-card{
+
+    flex:1;
+
+    min-width:350px;
+
+    background:#ffffff;
+
+    padding:30px;
+
+    border-radius:15px;
+
+    box-shadow:0 5px 20px rgba(0,0,0,0.15);
+
+}
+
+.result-card h2{
+
+    color:#1b5e20;
+
+    margin-bottom:15px;
+
+}
+
+.result-card hr{
+
+    margin-bottom:20px;
+
+}
+
+.result-card p{
+
+    font-size:20px;
+
+    margin:20px 0;
+
+}
+
+#diseaseName{
+
+    color:#d32f2f;
+
+    font-weight:bold;
+
+}
+
+#confidenceScore{
+
+    color:#1976d2;
+
+    font-weight:bold;
+
+}
+
+.navigation-buttons{
+
+    width:90%;
+
+    margin:40px auto;
+
+    display:flex;
+
+    justify-content:space-between;
+
+}
+
+.navigation-buttons button{
+
+    padding:14px 35px;
+
+    border:none;
+
+    border-radius:8px;
+
+    background:#1565c0;
+
+    color:white;
+
+    font-size:16px;
+
+    cursor:pointer;
+
+    transition:0.3s;
+
+}
+
+.navigation-buttons button:hover{
+
+    background:#0d47a1;
+
+}
+
+.page-header{
+
+    width:90%;
+
+    margin:30px auto;
+
+    text-align:center;
+
+}
+
+.page-header h1{
+
+    font-size:36px;
+
+    color:#1b5e20;
+
+    margin-bottom:10px;
+
+}
+
+.page-header p{
+
+    font-size:18px;
+
+    color:#555;
+
+}
+
+@media(max-width:900px){
+
+    .classification-container{
+
+        flex-direction:column;
+
+        align-items:center;
+
+    }
+
+    .upload-card,
+
+    .result-card{
+
+        width:100%;
+
+    }
+
+}
+/* ==========================================
+            GRAD-CAM PAGE
+========================================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI',sans-serif;
+}
+
+body{
+
+    background:#f4f6fb;
+
+}
+
+header{
+
+    background:#24146d;
+
+    color:white;
+
+    padding:20px;
+
+    text-align:center;
+
+}
+.heatmap-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+}
+
+.heatmap-image-box img {
+    width: 100%;
+    max-width: 600px;
+    height: auto;
+    border-radius: 10px;
+}
+
+.heatmap-legend img {
+    width: 90px;
+    height: auto;
+    display: block;
+}
+
+.container{
+
+    width:90%;
+
+    margin:40px auto;
+
+}
+
+.container h1{
+
+    text-align:center;
+
+    color:#24146d;
+
+    margin-bottom:35px;
+
+}
+
+.gradcam-container{
+
+    display:flex;
+
+    justify-content:center;
+
+    gap:40px;
+
+    flex-wrap:wrap;
+
+}
+
+.card{
+
+    width:380px;
+
+    background:white;
+
+    padding:20px;
+
+    border-radius:15px;
+
+    text-align:center;
+
+    box-shadow:0 5px 18px rgba(0,0,0,.15);
+
+}
+
+.card h3{
+
+    color:#24146d;
+
+    margin-bottom:15px;
+
+}
+
+.card img{
+
+    width:100%;
+
+    height:320px;
+
+    object-fit:contain;
+
+    border-radius:10px;
+
+    border:2px solid #ddd;
+
+}
+
+.algorithm-box{
+
+    width:350px;
+
+    margin:35px auto;
+
+    background:white;
+
+    padding:20px;
+
+    text-align:center;
+
+    border-radius:12px;
+
+    box-shadow:0 5px 15px rgba(0,0,0,.15);
+
+}
+
+.algorithm-box h3{
+
+    color:#24146d;
+
+    margin-bottom:10px;
+
+}
+
+.algorithm-box p{
+
+    font-size:24px;
+
+    font-weight:bold;
+
+}
+
+.status-box{
+
+    width:700px;
+
+    max-width:95%;
+
+    margin:30px auto;
+
+    background:#e8f5e9;
+
+    border-left:6px solid green;
+
+    padding:25px;
+
+    border-radius:10px;
+
+}
+
+.status-box h2{
+
+    color:green;
+
+    margin-bottom:10px;
+
+}
+
+.status-box p{
+
+    line-height:28px;
+
+    font-size:17px;
+
+}
+
+.button-group{
+
+    display:flex;
+
+    justify-content:center;
+
+    gap:30px;
+
+    margin-top:40px;
+
+}
+
+.button-group button{
+
+    width:260px;
+
+    height:50px;
+
+    border:none;
+
+    border-radius:8px;
+
+    background:#24146d;
+
+    color:white;
+
+    font-size:17px;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+.button-group button:hover{
+
+    background:#3b26aa;
+
+}
+
+@media(max-width:900px){
+
+    .gradcam-container{
+
+        flex-direction:column;
+
+        align-items:center;
+
+    }
+
+}

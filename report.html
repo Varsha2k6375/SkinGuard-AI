@@ -1,0 +1,1202 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+```
+<title>SkinGuard AI - Dermoscopic Skin Analyzer Report</title>
+
+<style>
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: Arial, Helvetica, sans-serif;
+        background: #f4f7fb;
+        color: #1f2937;
+        line-height: 1.6;
+    }
+
+    /* ================= TOP BAR ================= */
+
+    .topbar {
+        width: 100%;
+        background: #0f172a;
+        color: #ffffff;
+        padding: 18px 50px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-shadow: 0 3px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .logo {
+        font-size: 23px;
+        font-weight: bold;
+    }
+
+    .back-btn {
+        text-decoration: none;
+        color: #ffffff;
+        background: #2563eb;
+        padding: 10px 18px;
+        border-radius: 8px;
+        font-size: 14px;
+    }
+
+    .back-btn:hover {
+        background: #1d4ed8;
+    }
+
+    /* ================= CONTAINER ================= */
+
+    .container {
+        max-width: 1100px;
+        margin: 35px auto;
+        padding: 0 20px;
+    }
+
+    /* ================= HEADER ================= */
+
+    .report-header {
+        background: #ffffff;
+        padding: 35px;
+        border-radius: 16px;
+        text-align: center;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+        margin-bottom: 25px;
+    }
+
+    .report-header h1 {
+        font-size: 31px;
+        color: #0f172a;
+        margin-bottom: 7px;
+    }
+
+    .report-header h2 {
+        font-size: 18px;
+        color: #2563eb;
+        margin-bottom: 8px;
+    }
+
+    .report-header p {
+        color: #64748b;
+        font-size: 14px;
+    }
+
+    .scan-info {
+        margin-top: 20px;
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        flex-wrap: wrap;
+    }
+
+    .scan-info span {
+        background: #f1f5f9;
+        padding: 9px 15px;
+        border-radius: 8px;
+        font-size: 14px;
+    }
+
+    /* ================= SECTION ================= */
+
+    .section {
+        background: #ffffff;
+        margin-bottom: 25px;
+        padding: 28px;
+        border-radius: 15px;
+        box-shadow: 0 4px 18px rgba(0, 0, 0, 0.07);
+    }
+
+    .section-title {
+        font-size: 21px;
+        font-weight: bold;
+        color: #0f172a;
+        border-bottom: 2px solid #e2e8f0;
+        padding-bottom: 11px;
+        margin-bottom: 20px;
+    }
+
+    /* ================= TABLE ================= */
+
+    .report-table,
+    .probability-table,
+    .summary-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 10px;
+    }
+
+    .report-table th,
+    .probability-table th,
+    .summary-table th {
+        background: #1e3a5f;
+        color: #ffffff;
+        padding: 12px;
+        text-align: left;
+        font-size: 14px;
+    }
+
+    .report-table td,
+    .probability-table td,
+    .summary-table td {
+        padding: 12px;
+        border: 1px solid #dbe3ec;
+        font-size: 14px;
+    }
+
+    .report-table tr:nth-child(even) td,
+    .probability-table tr:nth-child(even) td,
+    .summary-table tr:nth-child(even) td {
+        background: #f8fafc;
+    }
+
+    /* ================= IMAGES ================= */
+
+    .image-container {
+        text-align: center;
+    }
+
+    .main-image {
+        width: 100%;
+        max-width: 500px;
+        height: 370px;
+        object-fit: contain;
+        border: 1px solid #dbe3ec;
+        border-radius: 12px;
+        padding: 8px;
+        background: #f8fafc;
+    }
+
+    .caption {
+        margin-top: 9px;
+        color: #64748b;
+        font-size: 13px;
+    }
+
+    .image-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 18px;
+    }
+
+    .image-box {
+        background: #f8fafc;
+        border: 1px solid #dbe3ec;
+        border-radius: 12px;
+        padding: 12px;
+        text-align: center;
+    }
+
+    .image-box h3 {
+        font-size: 15px;
+        color: #334155;
+        margin-bottom: 10px;
+    }
+
+    .image-box img {
+        width: 100%;
+        height: 250px;
+        object-fit: contain;
+        background: #ffffff;
+        border-radius: 8px;
+        border: 1px solid #dbe3ec;
+    }
+
+    /* ================= STATUS ================= */
+
+    .status {
+        display: inline-block;
+        padding: 6px 13px;
+        border-radius: 18px;
+        font-size: 12px;
+        font-weight: bold;
+    }
+
+    .status-good {
+        background: #dcfce7;
+        color: #166534;
+    }
+
+    .status-warning {
+        background: #fef3c7;
+        color: #92400e;
+    }
+
+    .status-danger {
+        background: #fee2e2;
+        color: #991b1b;
+    }
+
+    /* ================= CLASSIFICATION ================= */
+
+    .classification-result {
+        background: #f8fafc;
+        border: 1px solid #dbe3ec;
+        border-radius: 12px;
+        padding: 25px;
+        text-align: center;
+    }
+
+    .disease-name {
+        font-size: 29px;
+        font-weight: bold;
+        color: #2563eb;
+        margin-bottom: 10px;
+    }
+
+    .confidence {
+        font-size: 17px;
+        color: #475569;
+    }
+
+    /* ================= PROBABILITY ================= */
+
+    .probability-bar {
+        height: 10px;
+        width: 100%;
+        background: #e2e8f0;
+        border-radius: 20px;
+        overflow: hidden;
+    }
+
+    .probability-fill {
+        height: 100%;
+        background: #2563eb;
+        border-radius: 20px;
+
+        /*
+         * Jinja value is supplied through a CSS custom property.
+         * This prevents CSS validator errors caused by:
+         * style="width: {{ value }}%;"
+         */
+        width: var(--probability-width);
+    }
+
+    /* ================= GRAD CAM ================= */
+
+    .gradcam-description {
+        background: #eff6ff;
+        border-left: 5px solid #2563eb;
+        padding: 15px;
+        border-radius: 8px;
+        color: #1e40af;
+        font-size: 14px;
+        margin-bottom: 20px;
+    }
+
+    /* ================= SEVERITY ================= */
+
+    .severity-level {
+        font-size: 29px;
+        font-weight: bold;
+        text-align: center;
+        margin-bottom: 10px;
+    }
+
+    .severity-low {
+        color: #16a34a;
+    }
+
+    .severity-medium {
+        color: #d97706;
+    }
+
+    .severity-high {
+        color: #dc2626;
+    }
+
+    /* ================= RECOMMENDATION ================= */
+
+    .recommendation {
+        background: #eff6ff;
+        border-left: 5px solid #2563eb;
+        padding: 20px;
+        border-radius: 10px;
+        color: #1e3a8a;
+        font-size: 15px;
+    }
+
+    /* ================= DOWNLOAD ================= */
+
+    .download-section {
+        text-align: center;
+        background: #0f172a;
+        color: #ffffff;
+        padding: 30px;
+        border-radius: 15px;
+        margin-bottom: 25px;
+    }
+
+    .download-section h2 {
+        margin-bottom: 8px;
+    }
+
+    .download-section p {
+        color: #cbd5e1;
+        margin-bottom: 20px;
+        font-size: 14px;
+    }
+
+    .download-btn {
+        display: inline-block;
+        background: #2563eb;
+        color: #ffffff;
+        text-decoration: none;
+        padding: 13px 25px;
+        border-radius: 9px;
+        font-weight: bold;
+    }
+
+    .download-btn:hover {
+        background: #1d4ed8;
+    }
+
+    /* ================= DISCLAIMER ================= */
+
+    .disclaimer {
+        background: #ffeef1;
+        border: 1px solid #f7b7c2;
+        color: #9f1239;
+        padding: 20px;
+        border-radius: 12px;
+        font-size: 13px;
+        margin-bottom: 30px;
+    }
+
+    .disclaimer strong {
+        display: block;
+        margin-bottom: 8px;
+        font-size: 15px;
+    }
+
+    /* ================= FOOTER ================= */
+
+    footer {
+        text-align: center;
+        padding: 25px;
+        color: #64748b;
+        font-size: 13px;
+    }
+
+    /* ================= RESPONSIVE ================= */
+
+    @media (max-width: 750px) {
+
+        .topbar {
+            padding: 15px 20px;
+        }
+
+        .container {
+            margin: 20px auto;
+            padding: 0 12px;
+        }
+
+        .image-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .report-header h1 {
+            font-size: 25px;
+        }
+    }
+
+    /* ================= PRINT ================= */
+
+    @media print {
+
+        body {
+            background: #ffffff;
+        }
+
+        .topbar,
+        .download-section {
+            display: none;
+        }
+
+        .container {
+            max-width: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        .section,
+        .report-header {
+            box-shadow: none;
+            page-break-inside: avoid;
+        }
+
+        footer {
+            display: none;
+        }
+    }
+
+</style>
+```
+
+</head>
+
+<body>
+
+```
+<!-- ================= TOP BAR ================= -->
+
+<div class="topbar">
+
+    <div class="logo">
+        SkinGuard AI
+    </div>
+
+    <a
+        class="back-btn"
+        href="{{ url_for('classification.classification_page') }}"
+    >
+        Back
+    </a>
+
+</div>
+
+
+<div class="container">
+
+    <!-- ================= REPORT HEADER ================= -->
+
+    <div class="report-header">
+
+        <h1>
+            SkinGuard AI
+        </h1>
+
+        <h2>
+            Explainable AI Based Dermoscopic Skin Analyzer Report
+        </h2>
+
+        <p>
+            AI-assisted skin lesion screening and analysis report
+        </p>
+
+        <div class="scan-info">
+
+            <span>
+                <strong>Scan ID:</strong>
+                {{ scan_id }}
+            </span>
+
+            <span>
+                <strong>Date &amp; Time:</strong>
+                {{ report_date }}
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= 1. SCAN INFORMATION ================= -->
+
+    <div class="section">
+
+        <div class="section-title">
+            1. Scan Information
+        </div>
+
+        <table class="report-table">
+
+            <tr>
+                <th>Parameter</th>
+                <th>Result</th>
+            </tr>
+
+            <tr>
+                <td>Scan ID</td>
+                <td>{{ scan_id }}</td>
+            </tr>
+
+            <tr>
+                <td>Date &amp; Time</td>
+                <td>{{ report_date }}</td>
+            </tr>
+
+            <tr>
+                <td>Predicted Disease</td>
+                <td>
+                    <strong>{{ disease }}</strong>
+                </td>
+            </tr>
+
+            <tr>
+                <td>Confidence</td>
+                <td>
+                    {{ "%.2f"|format(confidence|float) }}%
+                </td>
+            </tr>
+
+            <tr>
+                <td>Severity</td>
+                <td>{{ severity }}</td>
+            </tr>
+
+            <tr>
+                <td>Severity Score</td>
+                <td>
+                    {{ "%.2f"|format(severity_score|float) }}%
+                </td>
+            </tr>
+
+        </table>
+
+    </div>
+
+
+    <!-- ================= 2. UPLOADED IMAGE ================= -->
+
+    <div class="section">
+
+        <div class="section-title">
+            2. Uploaded Dermoscopic Image
+        </div>
+
+        <div class="image-container">
+
+            {% if uploaded_image %}
+
+                <img
+                    class="main-image"
+                    src="{{ url_for('static', filename=uploaded_image) }}"
+                    alt="Uploaded Dermoscopic Image"
+                >
+
+                <div class="caption">
+                    Original dermoscopic image uploaded for AI analysis.
+                </div>
+
+            {% else %}
+
+                <p>
+                    Uploaded image is not available.
+                </p>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= 3. IMAGE QUALITY ================= -->
+
+    <div class="section">
+
+        <div class="section-title">
+            3. Image Quality Check
+        </div>
+
+        <table class="report-table">
+
+            <tr>
+                <th>Parameter</th>
+                <th>Result</th>
+            </tr>
+
+            <tr>
+                <td>Quality Score</td>
+                <td>{{ quality_score }}%</td>
+            </tr>
+
+            <tr>
+                <td>Blur</td>
+                <td>{{ blur_status }}</td>
+            </tr>
+
+            <tr>
+                <td>Brightness</td>
+                <td>{{ brightness_status }}</td>
+            </tr>
+
+            <tr>
+                <td>Noise</td>
+                <td>{{ noise_status }}</td>
+            </tr>
+
+            <tr>
+                <td>Overall Status</td>
+                <td>
+                    <span class="status status-good">
+                        {{ quality_status }}
+                    </span>
+                </td>
+            </tr>
+
+        </table>
+
+    </div>
+
+
+    <!-- ================= 4. IMAGE PRE-PROCESSING ================= -->
+
+    <div class="section">
+
+        <div class="section-title">
+            4. Image Pre-processing
+        </div>
+
+        <table class="report-table">
+
+            <tr>
+                <th>Parameter</th>
+                <th>Result</th>
+            </tr>
+
+            <tr>
+                <td>Status</td>
+                <td>
+                    <span class="status status-good">
+                        Completed
+                    </span>
+                </td>
+            </tr>
+
+            <tr>
+                <td>Resize</td>
+                <td>224 &times; 224 pixels</td>
+            </tr>
+
+            <tr>
+                <td>Enhancement</td>
+                <td>Applied</td>
+            </tr>
+
+            <tr>
+                <td>Normalization</td>
+                <td>Applied</td>
+            </tr>
+
+            <tr>
+                <td>Processing Pipeline</td>
+                <td>
+                    Original &rarr; Resized &rarr; Enhanced &rarr; Normalized
+                </td>
+            </tr>
+
+        </table>
+
+        <br>
+
+        <div class="image-container">
+
+            {% if preprocessed_image %}
+
+                <img
+                    class="main-image"
+                    src="{{ url_for('static', filename=preprocessed_image) }}"
+                    alt="Preprocessed Image"
+                >
+
+                <div class="caption">
+                    Resized, enhanced and normalized image.
+                </div>
+
+            {% else %}
+
+                <p>
+                    Preprocessed image is not available.
+                </p>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= 5. LESION SEGMENTATION ================= -->
+
+    <div class="section">
+
+        <div class="section-title">
+            5. Lesion Segmentation
+        </div>
+
+        <table class="report-table">
+
+            <tr>
+                <th>Parameter</th>
+                <th>Result</th>
+            </tr>
+
+            <tr>
+                <td>Segmentation Model</td>
+                <td>U-Net</td>
+            </tr>
+
+            <tr>
+                <td>Status</td>
+                <td>
+                    <span class="status status-good">
+                        {{ segmentation_status }}
+                    </span>
+                </td>
+            </tr>
+
+            <tr>
+                <td>Lesion Area</td>
+                <td>{{ lesion_area }}</td>
+            </tr>
+
+        </table>
+
+        <br>
+
+        <div class="image-container">
+
+            {% if segmentation_image %}
+
+                <img
+                    class="main-image"
+                    src="{{ url_for('static', filename=segmentation_image) }}"
+                    alt="Lesion Segmentation"
+                >
+
+                <div class="caption">
+                    U-Net based lesion segmentation output.
+                </div>
+
+            {% else %}
+
+                <p>
+                    Segmentation image is not available.
+                </p>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= 6. DISEASE CLASSIFICATION ================= -->
+
+    <div class="section">
+
+        <div class="section-title">
+            6. Disease Classification
+        </div>
+
+        <table class="report-table">
+
+            <tr>
+                <th>Parameter</th>
+                <th>Result</th>
+            </tr>
+
+            <tr>
+                <td>Predicted Class</td>
+                <td>
+                    <strong>{{ disease }}</strong>
+                </td>
+            </tr>
+
+            <tr>
+                <td>Confidence Score</td>
+                <td>
+                    {{ "%.2f"|format(confidence|float) }}%
+                </td>
+            </tr>
+
+            <tr>
+                <td>Classification Model</td>
+                <td>
+                    EfficientNet-B3
+                </td>
+            </tr>
+
+            <tr>
+                <td>Number of Classes</td>
+                <td>
+                    7
+                </td>
+            </tr>
+
+        </table>
+
+    </div>
+
+
+    <!-- ================= 7. PROBABILITY DISTRIBUTION ================= -->
+
+    <div class="section">
+
+        <div class="section-title">
+            7. Seven-Class Probability Distribution
+        </div>
+
+        {% if probabilities %}
+
+            <table class="probability-table">
+
+                <tr>
+                    <th>Disease Class</th>
+                    <th>Probability</th>
+                    <th>Distribution</th>
+                </tr>
+
+                {% if probabilities is mapping %}
+
+                    {% for label, value in probabilities.items() %}
+
+                        <tr>
+
+                            <td>
+                                {{ label }}
+                            </td>
+
+                            <td>
+                                {{ "%.2f"|format(value|float) }}%
+                            </td>
+
+                            <td>
+
+                                <div class="probability-bar">
+
+                                    <div
+                                        class="probability-fill"
+                                        style="--probability-width: {{ value|float }}%;"
+                                    ></div>
+
+                                </div>
+
+                            </td>
+
+                        </tr>
+
+                    {% endfor %}
+
+                {% else %}
+
+                    {% for item in probabilities %}
+
+                        <tr>
+
+                            <td>
+                                {{ item.label }}
+                            </td>
+
+                            <td>
+                                {{ "%.2f"|format(item.value|float) }}%
+                            </td>
+
+                            <td>
+
+                                <div class="probability-bar">
+
+                                    <div
+                                        class="probability-fill"
+                                        style="--probability-width: {{ item.value|float }}%;"
+                                    ></div>
+
+                                </div>
+
+                            </td>
+
+                        </tr>
+
+                    {% endfor %}
+
+                {% endif %}
+
+            </table>
+
+        {% else %}
+
+            <p>
+                Probability distribution is not available.
+            </p>
+
+        {% endif %}
+
+    </div>
+
+
+    <!-- ================= 8. GRAD-CAM ================= -->
+
+    <div class="section">
+
+        <div class="section-title">
+            8. Explainable AI - Grad-CAM
+        </div>
+
+        <div class="gradcam-description">
+
+            <strong>Explainability:</strong>
+
+            Grad-CAM highlights the image regions that contribute
+            to the model prediction.
+
+        </div>
+
+        <div class="image-grid">
+
+            <!-- ORIGINAL IMAGE -->
+
+            <div class="image-box">
+
+                <h3>
+                    Original Image
+                </h3>
+
+                {% if uploaded_image %}
+
+                    <img
+                        src="{{ url_for('static', filename=uploaded_image) }}"
+                        alt="Original Image"
+                    >
+
+                {% else %}
+
+                    <p>
+                        Unavailable
+                    </p>
+
+                {% endif %}
+
+            </div>
+
+
+            <!-- HEATMAP -->
+
+            <div class="image-box">
+
+                <h3>
+                    Grad-CAM Heatmap
+                </h3>
+
+                {% if gradcam_image %}
+
+                    <img
+                        src="{{ url_for('static', filename=gradcam_image) }}"
+                        alt="Grad-CAM Heatmap"
+                    >
+
+                {% else %}
+
+                    <p>
+                        Unavailable
+                    </p>
+
+                {% endif %}
+
+            </div>
+
+
+            <!-- IMPORTANT REGION -->
+
+            <div class="image-box">
+
+                <h3>
+                    Important Region
+                </h3>
+
+                {% if important_region %}
+
+                    <img
+                        src="{{ url_for('static', filename=important_region) }}"
+                        alt="Important Region"
+                    >
+
+                {% else %}
+
+                    <p>
+                        Unavailable
+                    </p>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= 9. SEVERITY ================= -->
+
+    <div class="section">
+
+        <div class="section-title">
+            9. Severity Prediction
+        </div>
+
+        <table class="report-table">
+
+            <tr>
+                <th>Parameter</th>
+                <th>Result</th>
+            </tr>
+
+            <tr>
+                <td>Severity Level</td>
+                <td>
+                    <strong>
+                        {{ severity }}
+                    </strong>
+                </td>
+            </tr>
+
+            <tr>
+                <td>Severity Score</td>
+                <td>
+                    {{ "%.2f"|format(severity_score|float) }}%
+                </td>
+            </tr>
+
+            <tr>
+                <td>Algorithm</td>
+                <td>
+                    Rule-Based Severity Prediction
+                </td>
+            </tr>
+
+        </table>
+
+    </div>
+
+
+    <!-- ================= PERSONALIZED RECOMMENDATION ================= -->
+
+    <div class="section">
+
+        <div class="section-title">
+            Personalized Clinical Recommendation
+        </div>
+
+        <div class="recommendation">
+
+            {% if recommendation %}
+
+                {{ recommendation }}
+
+            {% else %}
+
+                Please consult a qualified dermatologist
+                for professional evaluation.
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= 10. AI SYSTEM SUMMARY ================= -->
+
+    <div class="section">
+
+        <div class="section-title">
+            10. AI System Summary
+        </div>
+
+        <table class="summary-table">
+
+            <tr>
+                <th>System Component</th>
+                <th>Technology / Method</th>
+            </tr>
+
+            <tr>
+                <td>Image Pre-processing</td>
+                <td>OpenCV</td>
+            </tr>
+
+            <tr>
+                <td>Lesion Segmentation</td>
+                <td>U-Net</td>
+            </tr>
+
+            <tr>
+                <td>Disease Classification</td>
+                <td>EfficientNet-B3</td>
+            </tr>
+
+            <tr>
+                <td>Explainable AI</td>
+                <td>Grad-CAM</td>
+            </tr>
+
+            <tr>
+                <td>Severity Prediction</td>
+                <td>Rule-Based Algorithm</td>
+            </tr>
+
+            <tr>
+                <td>Application</td>
+                <td>Flask</td>
+            </tr>
+
+        </table>
+
+    </div>
+
+
+    <!-- ================= DOWNLOAD ================= -->
+
+    <div class="download-section">
+
+        <h2>
+            Generate Analysis Report
+        </h2>
+
+        <p>
+            Generate and download the complete SkinGuard AI
+            analysis report as a PDF.
+        </p>
+
+        <a
+            href="{{ url_for('report.generate_report') }}"
+            class="download-btn"
+        >
+            Generate &amp; Download PDF Report
+        </a>
+
+    </div>
+
+
+    <!-- ================= MEDICAL DISCLAIMER ================= -->
+
+    <div class="disclaimer">
+
+        <strong>
+            MEDICAL DISCLAIMER
+        </strong>
+
+        This AI-generated report is intended for screening
+        and clinical decision support purposes only.
+        It should not be considered as a substitute for
+        professional medical diagnosis. Please consult a
+        qualified dermatologist for final evaluation.
+
+    </div>
+
+</div>
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer>
+
+    © 2026 SkinGuard AI |
+    Explainable AI for Skin Lesion Analysis
+
+</footer>
+```
+
+</body>
+
+</html>

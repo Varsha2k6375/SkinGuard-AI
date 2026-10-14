@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        SkinGuard AI | Classification
+    </title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Segoe UI", Arial, sans-serif;
+        }
+
+        body {
+
+            min-height: 100vh;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #f5f7ff,
+                    #eef3ff
+                );
+
+            color: #222;
+        }
+
+        /* =========================================
+           HEADER
+        ========================================= */
+
+        header {
+
+            background: #24146d;
+
+            color: white;
+
+            padding: 18px 50px;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+        }
+
+        .logo {
+
+            font-size: 27px;
+
+            font-weight: 700;
+
+        }
+
+        nav a {
+
+            color: white;
+
+            text-decoration: none;
+
+            margin-left: 25px;
+
+            font-size: 15px;
+
+        }
+
+        /* =========================================
+           PAGE HEADER
+        ========================================= */
+
+        .page-header {
+
+            text-align: center;
+
+            padding: 35px 20px 15px;
+
+        }
+
+        .page-header h1 {
+
+            color: #24146d;
+
+            font-size: 36px;
+
+            margin-bottom: 8px;
+
+        }
+
+        .page-header p {
+
+            color: #666;
+
+            font-size: 16px;
+
+        }
+
+        /* =========================================
+           MAIN CONTAINER
+        ========================================= */
+
+        .classification-container {
+
+            width: 90%;
+
+            max-width: 1150px;
+
+            margin: 30px auto;
+
+            display: grid;
+
+            grid-template-columns:
+                1fr 1fr;
+
+            gap: 30px;
+
+        }
+
+        /* =========================================
+           CARDS
+        ========================================= */
+
+        .card {
+
+            background: white;
+
+            border-radius: 18px;
+
+            padding: 25px;
+
+            box-shadow:
+                0 8px 25px
+                rgba(36, 20, 109, 0.12);
+
+        }
+
+        .card h2 {
+
+            color: #24146d;
+
+            margin-bottom: 8px;
+
+        }
+
+        .card-description {
+
+            color: #777;
+
+            margin-bottom: 20px;
+
+            line-height: 1.6;
+
+        }
+
+        /* =========================================
+           IMAGE
+        ========================================= */
+
+        .image-wrapper {
+
+            width: 100%;
+
+            height: 390px;
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            background: #f5f6fb;
+
+            border-radius: 15px;
+
+            overflow: hidden;
+
+        }
+
+        .image-wrapper img {
+
+            width: 100%;
+
+            height: 100%;
+
+            object-fit: contain;
+
+        }
+
+        .no-image {
+
+            color: #999;
+
+            font-size: 17px;
+
+        }
+
+        /* =========================================
+           ALGORITHM
+        ========================================= */
+
+        .algorithm-box {
+
+            margin-top: 20px;
+
+            padding: 18px;
+
+            background: #f1edff;
+
+            border-radius: 12px;
+
+            text-align: center;
+
+        }
+
+        .algorithm-box span {
+
+            color: #24146d;
+
+            font-weight: 700;
+
+        }
+
+        /* =========================================
+           PREDICTION RESULT
+        ========================================= */
+
+        .prediction-box {
+
+            margin-top: 25px;
+
+            padding: 22px;
+
+            border-radius: 14px;
+
+            background: #f8f9ff;
+
+            border-left: 5px solid #24146d;
+
+        }
+
+        .prediction-box h3 {
+
+            color: #24146d;
+
+            margin-bottom: 15px;
+
+        }
+
+        .result-row {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            padding: 14px 0;
+
+            border-bottom: 1px solid #ddd;
+
+        }
+
+        .result-row:last-child {
+
+            border-bottom: none;
+
+        }
+
+        .result-label {
+
+            color: #666;
+
+        }
+
+        .result-value {
+
+            font-weight: 700;
+
+        }
+
+        #diseaseName {
+
+            color: #c62828;
+
+        }
+
+        #confidenceScore {
+
+            color: #1565c0;
+
+        }
+
+        /* =========================================
+           PREDICT BUTTON
+        ========================================= */
+
+        #predictBtn {
+
+            width: 100%;
+
+            margin-top: 25px;
+
+            padding: 15px;
+
+            border: none;
+
+            border-radius: 10px;
+
+            background: #24146d;
+
+            color: white;
+
+            font-size: 17px;
+
+            font-weight: 600;
+
+            cursor: pointer;
+
+            transition: 0.3s;
+
+        }
+
+        #predictBtn:hover {
+
+            background: #3922a8;
+
+        }
+
+        #predictBtn:disabled {
+
+            background: #aaa;
+
+            cursor: not-allowed;
+
+        }
+
+        /* =========================================
+           STATUS
+        ========================================= */
+
+        .status {
+
+            margin-top: 15px;
+
+            padding: 12px;
+
+            border-radius: 8px;
+
+            background: #eef7ee;
+
+            color: #28752d;
+
+            text-align: center;
+
+        }
+
+        /* =========================================
+           NAVIGATION
+        ========================================= */
+
+        .navigation-buttons {
+
+            width: 90%;
+
+            max-width: 1150px;
+
+            margin: 30px auto 50px;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            gap: 20px;
+
+        }
+
+        .navigation-buttons button {
+
+            padding: 14px 30px;
+
+            border: none;
+
+            border-radius: 10px;
+
+            font-size: 16px;
+
+            cursor: pointer;
+
+        }
+
+        .previous-btn {
+
+            background: #777;
+
+            color: white;
+
+        }
+
+        .next-btn {
+
+            background: #18a94b;
+
+            color: white;
+
+        }
+
+        .next-btn:disabled {
+
+            background: #aaa;
+
+            cursor: not-allowed;
+
+        }
+
+        /* =========================================
+           FOOTER
+        ========================================= */
+
+        footer {
+
+            background: #24146d;
+
+            color: white;
+
+            text-align: center;
+
+            padding: 18px;
+
+        }
+
+        /* =========================================
+           RESPONSIVE
+        ========================================= */
+
+        @media(max-width: 850px) {
+
+            .classification-container {
+
+                grid-template-columns: 1fr;
+
+            }
+
+            header {
+
+                padding: 18px 20px;
+
+            }
+
+            .page-header h1 {
+
+                font-size: 28px;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     HEADER
+===================================================== -->
+
+<header>
+
+    <div class="logo">
+        SkinGuard AI
+    </div>
+
+    <nav>
+
+        <a href="/">
+            Home
+        </a>
+
+    </nav>
+
+</header>
+
+
+<!-- =====================================================
+     PAGE HEADER
+===================================================== -->
+
+<section class="page-header">
+
+    <h1>
+        Skin Disease Classification
+    </h1>
+
+    <p>
+        AI-based skin lesion disease prediction
+        using EfficientNetB3
+    </p>
+
+</section>
+
+
+<!-- =====================================================
+     MAIN
+===================================================== -->
+
+<section class="classification-container">
+
+
+    <!-- =================================================
+         IMAGE CARD
+    ================================================== -->
+
+    <div class="card">
+
+        <h2>
+            Uploaded Skin Image
+        </h2>
+
+        <p class="card-description">
+
+            The image selected during the previous
+            steps is used for classification.
+
+        </p>
+
+
+        <div class="image-wrapper">
+
+            {% if image_path %}
+
+                <img
+                    src="{{ image_path }}"
+                    alt="Uploaded Skin Image"
+                >
+
+            {% else %}
+
+                <div class="no-image">
+
+                    No image available.
+
+                </div>
+
+            {% endif %}
+
+        </div>
+
+
+        <div class="algorithm-box">
+
+            Classification Algorithm :
+
+            <span>
+                EfficientNetB3
+            </span>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =================================================
+         RESULT CARD
+    ================================================== -->
+
+    <div class="card">
+
+        <h2>
+            AI Classification
+        </h2>
+
+        <p class="card-description">
+
+            EfficientNetB3 analyzes the uploaded
+            skin lesion image and predicts the
+            most probable disease.
+
+        </p>
+
+
+        <button
+            id="predictBtn"
+            onclick="predictDisease()"
+        >
+
+            Predict Disease
+
+        </button>
+
+
+        <div
+            id="statusMessage"
+            class="status"
+        >
+
+            Ready for Prediction
+
+        </div>
+
+
+        <!-- RESULT -->
+
+        <div class="prediction-box">
+
+            <h3>
+                Prediction Result
+            </h3>
+
+
+            <div class="result-row">
+
+                <span class="result-label">
+                    Disease
+                </span>
+
+                <span
+                    id="diseaseName"
+                    class="result-value"
+                >
+
+                    {% if disease %}
+                        {{ disease }}
+                    {% else %}
+                        Not Predicted
+                    {% endif %}
+
+                </span>
+
+            </div>
+
+
+            <div class="result-row">
+
+                <span class="result-label">
+                    Confidence
+                </span>
+
+                <span
+                    id="confidenceScore"
+                    class="result-value"
+                >
+
+                    {% if confidence is not none %}
+                        {{ confidence }}%
+                    {% else %}
+                        --
+                    {% endif %}
+
+                </span>
+
+            </div>
+
+
+            <div class="result-row">
+
+                <span class="result-label">
+                    Class Index
+                </span>
+
+                <span
+                    id="classIndex"
+                    class="result-value"
+                >
+
+                    {% if class_index is not none %}
+                        {{ class_index }}
+                    {% else %}
+                        --
+                    {% endif %}
+
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     NAVIGATION
+===================================================== -->
+
+<div class="navigation-buttons">
+
+
+    <button
+        class="previous-btn"
+        onclick="history.back()"
+    >
+
+        ← Previous
+
+    </button>
+
+
+    <button
+        class="next-btn"
+        id="nextBtn"
+        onclick="goNext()"
+        disabled
+    >
+
+        Explainable AI →
+
+    </button>
+
+
+</div>
+
+
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
+<footer>
+
+    <p>
+        SkinGuard AI
+    </p>
+
+    <p>
+        Explainable Skin Cancer Detection and
+        Severity Prediction Using Deep Learning
+    </p>
+
+    <p>
+        © 2026 SkinGuard AI
+    </p>
+
+</footer>
+
+
+
+<!-- =====================================================
+     JAVASCRIPT
+===================================================== -->
+
+<script>
+
+async function predictDisease() {
+
+    const predictBtn =
+        document.getElementById(
+            "predictBtn"
+        );
+
+    const statusMessage =
+        document.getElementById(
+            "statusMessage"
+        );
+
+    const diseaseName =
+        document.getElementById(
+            "diseaseName"
+        );
+
+    const confidenceScore =
+        document.getElementById(
+            "confidenceScore"
+        );
+
+    const classIndex =
+        document.getElementById(
+            "classIndex"
+        );
+
+    const nextBtn =
+        document.getElementById(
+            "nextBtn"
+        );
+
+
+    // Disable button
+
+    predictBtn.disabled = true;
+
+    predictBtn.innerText =
+        "Analyzing Image...";
+
+
+    statusMessage.innerText =
+        "EfficientNetB3 is analyzing the uploaded image...";
+
+
+    try {
+
+        const response = await fetch(
+            "/classification/predict",
+            {
+                method: "POST"
+            }
+        );
+
+
+        const result =
+            await response.json();
+
+
+        if (!result.success) {
+
+            throw new Error(
+                result.message
+            );
+
+        }
+
+
+        // =========================================
+        // SHOW RESULT
+        // =========================================
+
+        diseaseName.innerText =
+            result.disease;
+
+
+        confidenceScore.innerText =
+            result.confidence + "%";
+
+
+        classIndex.innerText =
+            result.class_index;
+
+
+        statusMessage.innerText =
+            "Classification Completed Successfully";
+
+
+        // Enable next
+
+        nextBtn.disabled = false;
+
+
+    }
+
+    catch(error) {
+
+        console.error(error);
+
+
+        statusMessage.innerText =
+            "Classification failed. Please try again.";
+
+
+        alert(
+            error.message
+        );
+
+    }
+
+
+    predictBtn.disabled = false;
+
+    predictBtn.innerText =
+        "Predict Disease";
+
+}
+
+
+
+function goNext() {
+
+    window.location.href =
+        "/gradcam";
+
+}
+
+</script>
+
+
+</body>
+
+</html>

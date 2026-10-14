@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>SkinGuard AI | Image Upload</title>
+
+    <!-- Main CSS -->
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/home.css') }}">
+
+    <!-- JavaScript -->
+    <script src="{{ url_for('static', filename='js/camera.js') }}"
+            defer></script>
+
+    <script src="{{ url_for('static', filename='js/upload.js') }}"
+            defer></script>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+                        HEADER
+===================================================== -->
+
+<header>
+
+    <div class="logo">
+
+        <h2>SkinGuard AI</h2>
+
+        <span>
+            Explainable Skin Cancer Detection
+        </span>
+
+    </div>
+
+
+    <nav>
+
+        <ul>
+
+            <li>
+                <a href="/">Home</a>
+            </li>
+
+            <li>
+                <a href="#">About</a>
+            </li>
+
+            <li>
+                <a href="#">Help</a>
+            </li>
+
+        </ul>
+
+    </nav>
+
+</header>
+
+
+
+<!-- =====================================================
+                    PAGE TITLE
+===================================================== -->
+
+<section class="page-header">
+
+    <h1>
+        Skin Lesion Analysis
+    </h1>
+
+    <p>
+        Upload or capture a dermoscopic skin image
+        for AI-based analysis.
+    </p>
+
+</section>
+
+
+
+<!-- =====================================================
+                    MAIN CONTAINER
+===================================================== -->
+
+<section class="container">
+
+
+    <!-- =================================================
+                        CAMERA CARD
+    ================================================== -->
+
+    <div class="camera-box">
+
+        <div class="card-icon">
+            📷
+        </div>
+
+        <h3>
+            Capture Image
+        </h3>
+
+        <p class="card-description">
+
+            Use your camera to capture
+            a skin lesion image.
+
+        </p>
+
+
+        <!-- Camera -->
+
+        <video
+            id="video"
+            autoplay
+            playsinline>
+        </video>
+
+
+        <!-- Hidden Canvas -->
+
+        <canvas
+            id="canvas"
+            hidden>
+        </canvas>
+
+
+        <!-- Camera Button -->
+
+        <button
+            type="button"
+            id="captureBtn">
+
+            📷 Capture Image
+
+        </button>
+
+
+        <!-- Camera Status -->
+
+        <p
+            id="cameraStatus"
+            class="camera-status">
+
+            Camera ready
+
+        </p>
+
+    </div>
+
+
+
+    <!-- =================================================
+                            OR
+    ================================================== -->
+
+    <div class="or-box">
+
+        <div class="or-line"></div>
+
+        <span>OR</span>
+
+        <div class="or-line"></div>
+
+    </div>
+
+
+
+    <!-- =================================================
+                        UPLOAD CARD
+    ================================================== -->
+
+    <div class="upload-box">
+
+        <div class="card-icon">
+            🖼️
+        </div>
+
+        <h3>
+            Upload Image
+        </h3>
+
+        <p class="card-description">
+
+            Select a JPG, JPEG or PNG
+            skin lesion image.
+
+        </p>
+
+
+        <!-- Upload Form -->
+
+        <form
+            action="/upload"
+            method="POST"
+            enctype="multipart/form-data"
+            id="uploadForm">
+
+
+            <!-- File Input -->
+
+            <label
+                for="image"
+                class="file-label">
+
+                Choose Image
+
+            </label>
+
+
+            <input
+                type="file"
+                id="image"
+                name="image"
+                accept=".jpg,.jpeg,.png"
+                required>
+
+
+            <!-- Selected File Name -->
+
+            <p
+                id="fileName"
+                class="file-name">
+
+                No image selected
+
+            </p>
+
+
+            <!-- Upload Button -->
+
+            <button
+                type="submit"
+                id="uploadBtn">
+
+                ⬆ Upload Image
+
+            </button>
+
+        </form>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+                    IMAGE PREVIEW
+===================================================== -->
+
+<section class="preview-section">
+
+
+    <div class="preview-header">
+
+        <h2>
+            Image Preview
+        </h2>
+
+        <p>
+            Make sure the skin lesion is clearly visible
+            before continuing.
+        </p>
+
+    </div>
+
+
+    <div class="preview-container">
+
+
+        <!-- Preview Image -->
+
+        <div class="preview-image-box">
+
+            <img
+                id="previewImage"
+                src=""
+                alt="Selected Skin Image">
+
+            <div
+                id="noPreview"
+                class="no-preview">
+
+                🖼️
+
+                <span>
+                    Image preview will appear here
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- Image Information -->
+
+        <div class="image-info">
+
+            <h3>
+                Image Information
+            </h3>
+
+
+            <div class="info-row">
+
+                <span>
+                    File Name
+                </span>
+
+                <strong id="previewFileName">
+                    —
+                </strong>
+
+            </div>
+
+
+            <div class="info-row">
+
+                <span>
+                    File Type
+                </span>
+
+                <strong id="previewFileType">
+                    —
+                </strong>
+
+            </div>
+
+
+            <div class="info-row">
+
+                <span>
+                    Image Status
+                </span>
+
+                <strong
+                    id="imageStatus"
+                    class="status-waiting">
+
+                    Waiting for image
+
+                </strong>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+                    ANALYSIS INFORMATION
+===================================================== -->
+
+<section class="info-section">
+
+
+    <h2>
+        SkinGuard AI Analysis Pipeline
+    </h2>
+
+
+    <p>
+        Your uploaded image will be processed through
+        multiple AI stages for skin lesion analysis.
+    </p>
+
+
+    <div class="pipeline">
+
+
+        <div class="pipeline-step">
+
+            <div class="step-number">
+                1
+            </div>
+
+            <h3>
+                Image Quality
+            </h3>
+
+            <p>
+                Checks image quality,
+                blur and brightness.
+            </p>
+
+        </div>
+
+
+        <div class="pipeline-arrow">
+            →
+        </div>
+
+
+        <div class="pipeline-step">
+
+            <div class="step-number">
+                2
+            </div>
+
+            <h3>
+                Preprocessing
+            </h3>
+
+            <p>
+                Prepares the image
+                for AI analysis.
+            </p>
+
+        </div>
+
+
+        <div class="pipeline-arrow">
+            →
+        </div>
+
+
+        <div class="pipeline-step">
+
+            <div class="step-number">
+                3
+            </div>
+
+            <h3>
+                Segmentation
+            </h3>
+
+            <p>
+                Identifies the
+                lesion region.
+            </p>
+
+        </div>
+
+
+        <div class="pipeline-arrow">
+            →
+        </div>
+
+
+        <div class="pipeline-step">
+
+            <div class="step-number">
+                4
+            </div>
+
+            <h3>
+                Classification
+            </h3>
+
+            <p>
+                Predicts the
+                skin disease.
+            </p>
+
+        </div>
+
+
+        <div class="pipeline-arrow">
+            →
+        </div>
+
+
+        <div class="pipeline-step">
+
+            <div class="step-number">
+                5
+            </div>
+
+            <h3>
+                Explainable AI
+            </h3>
+
+            <p>
+                Generates Grad-CAM
+                visual explanation.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+                    NEXT BUTTON
+===================================================== -->
+
+<section class="next-page">
+
+
+    <a
+        href="/quality"
+        id="qualityLink">
+
+        <button
+            type="button"
+            id="nextBtn">
+
+            Continue to Image Quality Checking
+            →
+
+        </button>
+
+    </a>
+
+
+    <p class="next-description">
+
+        Upload or capture an image before continuing.
+
+    </p>
+
+</section>
+
+
+
+<!-- =====================================================
+                        FOOTER
+===================================================== -->
+
+<footer>
+
+
+    <div class="footer-content">
+
+
+        <h3>
+            SkinGuard AI
+        </h3>
+
+
+        <p>
+            Explainable Skin Cancer Detection
+            and Severity Prediction Using Deep Learning
+        </p>
+
+
+        <div class="footer-divider"></div>
+
+
+        <p>
+            Supported Formats:
+            JPG • JPEG • PNG
+        </p>
+
+
+        <p>
+            © 2026 SkinGuard AI
+        </p>
+
+    </div>
+
+</footer>
+
+
+
+<!-- =====================================================
+                    SIMPLE PREVIEW SCRIPT
+===================================================== -->
+
+<script>
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+
+        const imageInput =
+            document.getElementById("image");
+
+
+        const previewImage =
+            document.getElementById("previewImage");
+
+
+        const noPreview =
+            document.getElementById("noPreview");
+
+
+        const fileName =
+            document.getElementById("fileName");
+
+
+        const previewFileName =
+            document.getElementById("previewFileName");
+
+
+        const previewFileType =
+            document.getElementById("previewFileType");
+
+
+        const imageStatus =
+            document.getElementById("imageStatus");
+
+
+        imageInput.addEventListener(
+            "change",
+            function () {
+
+
+                const file =
+                    this.files[0];
+
+
+                if (!file) {
+
+                    return;
+
+                }
+
+
+                /* File Name */
+
+                fileName.textContent =
+                    file.name;
+
+
+                previewFileName.textContent =
+                    file.name;
+
+
+                /* File Type */
+
+                previewFileType.textContent =
+                    file.type;
+
+
+                /* Preview */
+
+                const reader =
+                    new FileReader();
+
+
+                reader.onload =
+                    function (event) {
+
+
+                        previewImage.src =
+                            event.target.result;
+
+
+                        previewImage.style.display =
+                            "block";
+
+
+                        noPreview.style.display =
+                            "none";
+
+
+                        /* Status */
+
+                        imageStatus.textContent =
+                            "Image Selected";
+
+
+                        imageStatus.className =
+                            "status-success";
+
+                    };
+
+
+                reader.readAsDataURL(file);
+
+            }
+
+        );
+
+    }
+
+);
+
+</script>
+
+
+</body>
+
+</html>

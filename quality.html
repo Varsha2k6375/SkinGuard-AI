@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Image Quality Checking</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static',
+          filename='css/style.css') }}">
+
+    <script defer
+            src="{{ url_for('static',
+            filename='js/quality.js') }}">
+    </script>
+
+</head>
+
+<body>
+
+<header>
+
+    <div class="logo">
+
+        <h2>SkinGuard AI</h2>
+
+    </div>
+
+    <nav>
+
+        <a href="/">Home</a>
+
+        <a href="#">About</a>
+
+        <a href="#">Help</a>
+
+    </nav>
+
+</header>
+
+
+<div class="quality-container">
+
+
+    <!-- Uploaded Image -->
+
+    <div class="image-card">
+
+        <h3>Uploaded Image</h3>
+
+        <img src="{{ image_path }}"
+             alt="Uploaded Image">
+
+    </div>
+
+
+
+    <!-- Quality Result -->
+
+    <div class="quality-card">
+
+        <h3>Quality Analysis</h3>
+
+        <table>
+
+            <tr>
+
+                <td>✔ Resolution</td>
+
+                <td>{{ resolution }}</td>
+
+            </tr>
+
+            <tr>
+
+                <td>✔ Blur Detection</td>
+
+                <td>{{ blur }}</td>
+
+            </tr>
+
+            <tr>
+
+                <td>✔ Brightness</td>
+
+                <td>{{ brightness }}</td>
+
+            </tr>
+
+            <tr>
+
+                <td>✔ Contrast</td>
+
+                <td>{{ contrast }}</td>
+
+            </tr>
+
+            <tr>
+
+                <td>✔ Noise Level</td>
+
+                <td>{{ noise }}</td>
+
+            </tr>
+
+            <tr>
+
+                <td>✔ Lesion Visibility</td>
+
+                <td>{{ visibility }}</td>
+
+            </tr>
+
+        </table>
+
+    </div>
+
+</div>
+
+
+
+<div class="score-box">
+
+    <h2>Image Quality Score</h2>
+
+    <h1>{{ score }}%</h1>
+
+</div>
+
+
+
+<div class="status-box">
+
+    <h2>{{ status }}</h2>
+
+    <p>{{ message }}</p>
+
+</div>
+
+
+
+<div class="next-btn">
+
+    <a href="/preprocessing">
+
+        <button>
+
+            Continue to Preprocessing →
+
+        </button>
+
+    </a>
+
+</div>
+
+</body>
+
+</html>

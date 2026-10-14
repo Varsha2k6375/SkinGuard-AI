@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Lesion Segmentation</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+<body>
+
+<header>
+
+    <h2>SkinGuard AI</h2>
+
+</header>
+
+<div class="container">
+
+    <h1>Lesion Segmentation (U-Net)</h1>
+
+    <div class="segmentation-container">
+
+        <div class="card">
+
+            <h3>Preprocessed Image</h3>
+
+            <img src="{{ original_image }}" alt="Preprocessed Image">
+
+        </div>
+
+        <div class="card">
+
+            <h3>Segmented Image</h3>
+
+            <img src="{{ segmented_image }}" alt="Segmented Image">
+
+        </div>
+
+    </div>
+
+    <div class="algorithm-box">
+
+        <h3>Algorithm Used</h3>
+
+        <p>{{ algorithm }}</p>
+
+    </div>
+
+    <div class="status-box">
+
+        <h2>{{ status }}</h2>
+
+        <p>
+            The lesion has been successfully extracted
+            from the surrounding healthy skin.
+        </p>
+
+    </div>
+
+    <div class="button-container">
+
+        <a href="/preprocessing">
+
+            <button type="button">
+
+                ← Previous
+
+            </button>
+
+        </a>
+
+        <a href="/classification">
+
+            <button type="button">
+
+                Continue to Classification →
+
+            </button>
+
+        </a>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>
